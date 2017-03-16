@@ -1,4 +1,6 @@
-public class Hospital {
+import java.util.Comparator;
+
+public class Hospital implements Comparable<Hospital>{
 
 	private int id;
 	private String name;
@@ -99,6 +101,14 @@ public class Hospital {
 
 	@Override
 	public String toString() {
-		return "id = " + this.id + "\nname = " + this.name;
+		return this.name + " " + this.state + " " + this.county + " " + this.address;
+	}
+	
+	public int compareTo(Hospital that){
+		if(state.equals(that.getState())){
+			if (county.equals(that.getCounty())) { return address.compareTo(that.getAddress()); }
+			else { return county.compareTo(that.getCounty()); }
+		}
+		else return state.compareTo(that.getState());
 	}
 }
