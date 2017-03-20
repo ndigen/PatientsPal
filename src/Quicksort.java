@@ -42,17 +42,19 @@ public class Quicksort {
 
 	
 	public static Random rand = new Random();
+	private static String criteria;
     /**
      * Rearranges the array in ascending order, using the natural order.
      * @param a the array to be sorted
      */
-    public static void sort(Comparable[] a) {
+    public static void sort(Hospital[] a, String c) {
         shuffle(a);
+        criteria = c;
         sort(a, 0, a.length - 1);
     }
 
     // quicksort the subarray from a[lo] to a[hi]
-    private static void sort(Comparable[] a, int lo, int hi) { 
+    private static void sort(Hospital[] a, int lo, int hi) { 
         if (hi <= lo) return;
         int j = partition(a, lo, hi);
         sort(a, lo, j-1);
@@ -61,10 +63,10 @@ public class Quicksort {
 
     // partition the subarray a[lo..hi] so that a[lo..j-1] <= a[j] <= a[j+1..hi]
     // and return the index j.
-    private static int partition(Comparable[] a, int lo, int hi) {
+    private static int partition(Hospital[] a, int lo, int hi) {
         int i = lo;
         int j = hi + 1;
-        Comparable v = a[lo];
+        Hospital v = a[lo];
         while (true) { 
 
             // find item on lo to swap
@@ -97,7 +99,7 @@ public class Quicksort {
      * @param  k the rank of the key
      * @return the key of rank {@code k}
      */
-    public static Comparable select(Comparable[] a, int k) {
+    public static Hospital select(Hospital[] a, int k) {
         if (k < 0 || k >= a.length) {
             throw new IndexOutOfBoundsException("Selected element out of bounds");
         }
@@ -119,8 +121,8 @@ public class Quicksort {
     ***************************************************************************/
     
     // is v < w ?
-    private static boolean less(Comparable v, Comparable w) {
-        return v.compareTo(w) < 0;
+    private static boolean less(Hospital v, Hospital w) {
+        return v.compareTo(w, criteria) < 0;
     }
         
     // exchange a[i] and a[j]
@@ -130,7 +132,7 @@ public class Quicksort {
         a[j] = swap;
     }
 
-    public static void shuffle(Comparable[] a) {
+    public static void shuffle(Hospital[] a) {
     	for (int i = 0; i < a.length; i++) {
 			exch(a, i, rand.nextInt(4807));
 		}
