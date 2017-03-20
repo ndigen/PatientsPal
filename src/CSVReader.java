@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class CSVReader {
 
@@ -12,16 +13,21 @@ public class CSVReader {
 	 * @return array of hospitals
 	 * @throws FileNotFoundException
 	 */
-	public static Hospital[] init() throws FileNotFoundException {
+	public static void init() throws FileNotFoundException {
 		Scanner scanner = new Scanner(new File("data//Patient_survey__HCAHPS__-_Hospital.csv"));
 		scanner.nextLine();
 
-		Hospital[] hospitals = new Hospital[4807];
+		Client.hospitals = new Hospital[4807];
+		Client.countyList = new ArrayList<ArrayList<String>>(50);
 
 		int count = 0;
 		String line = scanner.nextLine();
 		String[] fields = line.split(REGEX);
 
+		String currentState = "";
+		String currentCounty = "";
+		int stateCount = -1;
+		
 		while (scanner.hasNextLine()) {
 
 			int id = Integer.parseInt(fields[0]);
@@ -31,6 +37,17 @@ public class CSVReader {
 			String state = fields[4];
 			String phoneNum = fields[7];
 			String county = fields[6];
+			
+			if(!county.equals(currentCounty)){
+				if(!state.equals(currentState)){
+					stateCount++;
+					Client.countyList.add(new ArrayList<String>());
+					Client.countyList.get(stateCount).add(state);
+					currentState = state;
+				}
+				Client.countyList.get(stateCount).add(county);
+				currentCounty = county;
+			}
 
 			int[] reviews = new int[29];
 			for (int i = 0; i < 29; i++) {
@@ -43,11 +60,11 @@ public class CSVReader {
 					line = scanner.nextLine();
 				fields = line.split(REGEX);
 			}
-			hospitals[count] = new Hospital(id, name, address, zip, state, phoneNum, county, reviews);
+			Client.hospitals[count] = new Hospital(id, name, address, zip, state, phoneNum, county, reviews);
 			count++;
 		}
 		scanner.close();
-		return hospitals;
+		
 	}
 
 }
