@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-public class Hospital implements Comparable<Hospital>{
+public class Hospital {
 
 	private int id;
 	private String name;
@@ -98,17 +98,37 @@ public class Hospital implements Comparable<Hospital>{
 	public int[] getRatings() {
 		return ratings;
 	}
+	
+	public double getOverallRating() {
+		int sum = ratings[23] + ratings[24] + ratings[25];
+		double ratingTotal = 3 * ratings[23] + 7.5 * ratings[24] + 9.5 * ratings[25];
+		return ratingTotal/sum;
+	}
 
 	@Override
 	public String toString() {
-		return this.name + " " + this.state + " " + this.county + " " + this.address;
+		return String.format("%-70s%-20s%-30s%-50s%.2f\n", name, state, county, address, getOverallRating());
 	}
 	
-	public int compareTo(Hospital that){
-		if(state.equals(that.getState())){
-			if (county.equals(that.getCounty())) { return address.compareTo(that.getAddress()); }
-			else { return county.compareTo(that.getCounty()); }
+	public int compareTo(Hospital that, String criteria){
+		if(criteria.equals("Location")){
+			if(state.equals(that.getState())){
+				if (county.equals(that.getCounty())) { return address.compareTo(that.getAddress()); }
+				else { return county.compareTo(that.getCounty()); }
+			}
+			else return state.compareTo(that.getState());
+		}else if(criteria.equals("Name")) {
+			return name.compareTo(that.getName());
+		}else if(criteria.equals("Overall Rating")){
+			if(getOverallRating() < that.getOverallRating()){
+				return 1;
+			} else if(getOverallRating() > that.getOverallRating()){
+				return -1;
+			} else {
+				return 0;
+			}
 		}
-		else return state.compareTo(that.getState());
+		
+		return 0;
 	}
 }
