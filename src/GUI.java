@@ -28,14 +28,14 @@ public class GUI extends JFrame {
 	 */
 	public GUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1498, 1084);
+		setBounds(100, 100, 800,800);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(60, 138, 1345, 849);
+		scrollPane.setBounds(10, 70, 780, 600);
 
 		resultsTextArea = new JTextArea();
 		resultsTextArea.setFont(new Font("monospaced", Font.PLAIN, 12));
@@ -43,29 +43,29 @@ public class GUI extends JFrame {
 
 		String[] empty = {" "};
 		countyComboBox = new JComboBox<String>(empty);
-		countyComboBox.setBounds(540, 57, 247, 22);
+		countyComboBox.setBounds(150, 37, 247, 22);
 
 		lblCounty = new JLabel("County");
-		lblCounty.setBounds(540, 28, 56, 16);
+		lblCounty.setBounds(150, 10, 56, 16);
 
 		statesComboBox = new JComboBox<String>(Client.stateList);
 		statesComboBox.addActionListener(new stateComboBoxListener());
-		statesComboBox.setBounds(423, 57, 64, 22);
+		statesComboBox.setBounds(50, 37, 64, 22);
 
 		lblState = new JLabel("State");
-		lblState.setBounds(423, 28, 56, 16);
+		lblState.setBounds(50, 10, 56, 16);
 
 		String[] sortByOptions = { "Name", "Location", "Overall Rating" };
 		sortByComboBox = new JComboBox<String>(sortByOptions);
-		sortByComboBox.setBounds(942, 57, 137, 22);
+		sortByComboBox.setBounds(425, 37, 137, 22);
 
 		lblSortBy = new JLabel("Sort By:");
-		lblSortBy.setBounds(942, 28, 56, 16);
+		lblSortBy.setBounds(425, 10, 56, 16);
 		contentPane.add(lblSortBy);
 
 		btnSort = new JButton("SORT");
 		btnSort.addActionListener(new sortBtnListener());
-		btnSort.setBounds(1150, 56, 97, 25);
+		btnSort.setBounds(600, 37, 97, 25);
 
 		contentPane.add(sortByComboBox);
 		contentPane.add(lblState);

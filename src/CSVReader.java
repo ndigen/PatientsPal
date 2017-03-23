@@ -31,7 +31,7 @@ public class CSVReader {
 		while (scanner.hasNextLine()) {
 
 			int id = Integer.parseInt(fields[0]);
-			String name = fields[1];
+			String name = fields[1].replaceAll("\"", "");
 			String address = fields[2];
 			String zip = fields[5];
 			String state = fields[4];
