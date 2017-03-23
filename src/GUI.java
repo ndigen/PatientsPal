@@ -133,14 +133,10 @@ public class GUI extends JFrame {
 					}
 				}
 			}
-
-			Hospital[] results = new Hospital[matches.size()];
-
+			
 			for (int i = 0; i < matches.size(); i++) {
-				results[i] = matches.get(i);
+				resultsTextArea.append(matches.get(i).toString());
 			}
-
-			resultsTextArea.setText(Client.printHospitals(results));
 		}
 	}
 
