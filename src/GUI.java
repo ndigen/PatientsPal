@@ -28,14 +28,14 @@ public class GUI extends JFrame {
 	 */
 	public GUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800,800);
+		setBounds(100, 100, 800,600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 70, 780, 600);
+		scrollPane.setBounds(10, 70, 750, 450);
 
 		resultsTextArea = new JTextArea();
 		resultsTextArea.setFont(new Font("monospaced", Font.PLAIN, 12));
