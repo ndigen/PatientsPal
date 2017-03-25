@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
+import javax.swing.JList;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
@@ -13,15 +14,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import java.awt.Font;
+import javax.swing.DefaultListModel;
 
 
 public class GUI extends JFrame {
 	private JPanel contentPane;
 	JScrollPane scrollPane;
-	JTextArea resultsTextArea;
+	JList resultsList;
 	JComboBox<String> countyComboBox, statesComboBox, sortByComboBox;
 	JLabel lblCounty, lblState, lblSortBy;
 	JButton btnSort;
+	
+	DefaultListModel<String> listModel;
 
 	/**
 	 * Create the frame.
@@ -37,9 +41,10 @@ public class GUI extends JFrame {
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 70, 750, 450);
 
-		resultsTextArea = new JTextArea();
-		resultsTextArea.setFont(new Font("monospaced", Font.PLAIN, 12));
-		scrollPane.setViewportView(resultsTextArea);
+		listModel = new DefaultListModel<String>();
+		resultsList = new JList<String>(listModel);
+		resultsList.setFont(new Font("monospaced", Font.PLAIN, 12));
+		scrollPane.setViewportView(resultsList);
 
 		String[] empty = {" "};
 		countyComboBox = new JComboBox<String>(empty);
@@ -134,8 +139,10 @@ public class GUI extends JFrame {
 				}
 			}
 			
+			listModel.clear();
+			
 			for (int i = 0; i < matches.size(); i++) {
-				resultsTextArea.append(matches.get(i).toString());
+				listModel.addElement(matches.get(i).toString());
 			}
 		}
 	}
