@@ -15,6 +15,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.DefaultListModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class GUI extends JFrame {
@@ -44,6 +46,7 @@ public class GUI extends JFrame {
 		listModel = new DefaultListModel<String>();
 		resultsList = new JList<String>(listModel);
 		resultsList.setFont(new Font("monospaced", Font.PLAIN, 12));
+		resultsList.addMouseListener(new resultsListListener());
 		scrollPane.setViewportView(resultsList);
 
 		String[] empty = {" "};
@@ -146,5 +149,11 @@ public class GUI extends JFrame {
 			}
 		}
 	}
-
+	
+	public class resultsListListener extends MouseAdapter {
+		public void mouseClicked(MouseEvent event) {
+			
+	    }
+	}
+			
 }
