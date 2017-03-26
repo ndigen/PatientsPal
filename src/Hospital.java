@@ -100,39 +100,33 @@ public class Hospital {
 	}
 	
 	public double getCleanlinessRating(){
-		int sum = ratings[0] + ratings[1] + ratings[2];
 		double ratingTotal = 0 * ratings[2] + 2.5 * ratings[1] + 5 * ratings[0];
-		return ratingTotal / sum;
+		return ratingTotal / 100;
 	}
 	
 	public double getNurseCommunicationRating(){
-		int sum = ratings[3] + ratings[4] + ratings[5];
 		double ratingTotal = 0 * ratings[5] + 2.5 * ratings[4] + 5 * ratings[3];
-		return ratingTotal / sum;
+		return ratingTotal / 100;
 	}
 	
 	public double getDoctorCommunicationRating(){
-		int sum = ratings[6] + ratings[7] + ratings[8];
 		double ratingTotal = 0 * ratings[8] + 2.5 * ratings[7] + 5 * ratings[6];
-		return ratingTotal / sum;
+		return ratingTotal / 100;
 	}
 	
 	public double getHelpRating(){
-		int sum = ratings[9] + ratings[10] + ratings[11];
 		double ratingTotal = 0 * ratings[11] + 2.5 * ratings[10] + 5 * ratings[9];
-		return ratingTotal / sum;
+		return ratingTotal / 100;
 	}
 	
 	public double getPainControlRating(){
-		int sum = ratings[12] + ratings[13] + ratings[14];
 		double ratingTotal = 0 * ratings[14] + 2.5 * ratings[13] + 5 * ratings[12];
-		return ratingTotal / sum;
+		return ratingTotal / 100;
 	}
 	
 	public double getQuietnessRating(){
-		int sum = ratings[24] + ratings[25] + ratings[26];
 		double ratingTotal = 0 * ratings[26] + 2.5 * ratings[25] + 5 * ratings[24];
-		return ratingTotal / sum;
+		return ratingTotal / 100;
 	}
 
 	public double getOverallRating() {
@@ -143,8 +137,9 @@ public class Hospital {
 	public String getDetails(){
 		return String.format("Name: " + name + "\nLocation: " + address + ", " + county + ", " + state + "\nOverall Rating: %.2f "
 				+ "\n   Cleanliness: %.2f" + "\n   Nurse Communication: %.2f" + "\n   Doctor Communication: %.2f" + "\n   Effective Help: %.2f"
-				+ "\n   Pain Control: %.2f" + "\n   Quietness: %.2f", getOverallRating(), getCleanlinessRating(), getNurseCommunicationRating()
-				, getDoctorCommunicationRating(), getHelpRating(), getPainControlRating(), getQuietnessRating());
+				+ "\n   Pain Control: %.2f" + "\n   Quietness: %.2f", getOverallRating() < 0 ? "NA" : getOverallRating(), getCleanlinessRating() < 0 ? "NA" : getCleanlinessRating()
+				, getNurseCommunicationRating() < 0 ? "NA" : getNurseCommunicationRating() , getDoctorCommunicationRating() < 0 ? "NA" : getDoctorCommunicationRating(), getHelpRating()
+				, getPainControlRating() < 0 ? "NA" : getPainControlRating(), getQuietnessRating() < 0 ? "NA" : getQuietnessRating());
 	}
 
 	@Override
