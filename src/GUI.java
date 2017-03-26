@@ -18,7 +18,6 @@ import javax.swing.DefaultListModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
 public class GUI extends JFrame {
 	private JPanel contentPane;
 	JScrollPane scrollPane;
@@ -26,15 +25,17 @@ public class GUI extends JFrame {
 	JComboBox<String> countyComboBox, statesComboBox, sortByComboBox;
 	JLabel lblCounty, lblState, lblSortBy;
 	JButton btnSort;
-	
+	JTextArea details;
+
 	DefaultListModel<String> listModel;
+	ArrayList<Hospital> matches;
 
 	/**
 	 * Create the frame.
 	 */
 	public GUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800,600);
+		setBounds(100, 100, 800, 800);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -49,7 +50,7 @@ public class GUI extends JFrame {
 		resultsList.addMouseListener(new resultsListListener());
 		scrollPane.setViewportView(resultsList);
 
-		String[] empty = {" "};
+		String[] empty = { " " };
 		countyComboBox = new JComboBox<String>(empty);
 		countyComboBox.setBounds(150, 37, 247, 22);
 
@@ -75,6 +76,9 @@ public class GUI extends JFrame {
 		btnSort.addActionListener(new sortBtnListener());
 		btnSort.setBounds(600, 37, 97, 25);
 
+		details = new JTextArea();
+		details.setBounds(10, 530, 750, 260);
+
 		contentPane.add(sortByComboBox);
 		contentPane.add(lblState);
 		contentPane.add(statesComboBox);
@@ -82,17 +86,18 @@ public class GUI extends JFrame {
 		contentPane.add(countyComboBox);
 		contentPane.add(scrollPane);
 		contentPane.add(btnSort);
+		contentPane.add(details);
 	}
 
 	public class stateComboBoxListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			
-			if(statesComboBox.getSelectedItem().toString().equals("ALL")){
+
+			if (statesComboBox.getSelectedItem().toString().equals("ALL")) {
 				countyComboBox.removeAllItems();
 				countyComboBox.addItem(" ");
 				return;
 			}
-			
+
 			String[] array = new String[0];
 			for (int i = 0; i < Client.countyList.size(); i++) {
 				if (statesComboBox.getSelectedItem().toString().equals(Client.countyList.get(i).get(0))) {
@@ -121,7 +126,7 @@ public class GUI extends JFrame {
 			String state = statesComboBox.getSelectedItem().toString();
 			String county = countyComboBox.getSelectedItem().toString();
 
-			ArrayList<Hospital> matches = new ArrayList();
+			matches = new ArrayList<Hospital>();
 
 			if (county.equals("ALL")) {
 				for (int i = 0; i < Client.hospitals.length; i++) {
@@ -129,7 +134,7 @@ public class GUI extends JFrame {
 						matches.add(Client.hospitals[i]);
 					}
 				}
-			} else if(state.equals("ALL")) {
+			} else if (state.equals("ALL")) {
 				for (int i = 0; i < Client.hospitals.length; i++) {
 					matches.add(Client.hospitals[i]);
 				}
@@ -141,19 +146,19 @@ public class GUI extends JFrame {
 					}
 				}
 			}
-			
+
 			listModel.clear();
-			
+
 			for (int i = 0; i < matches.size(); i++) {
 				listModel.addElement(matches.get(i).toString());
 			}
 		}
 	}
-	
+
 	public class resultsListListener extends MouseAdapter {
 		public void mouseClicked(MouseEvent event) {
-			
-	    }
+			details.setText(matches.get(resultsList.getSelectedIndex()).getDetails());
+		}
 	}
-			
+
 }
