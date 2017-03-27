@@ -8,19 +8,20 @@ public class CSVReader {
 	private static final String REGEX = "(,(?=\\S)|:)";
 	
 	/**
-	 * Initializes the data as an array of hospitals
+	 * Initializes all the data to be used from the dataset
 	 * 
-	 * @return array of hospitals
 	 * @throws FileNotFoundException
 	 */
 	public static void init() throws FileNotFoundException {
+		//open file for reading
 		Scanner scanner = new Scanner(new File("data//Patient_survey__HCAHPS__-_Hospital.csv"));
 		scanner.nextLine();
 
+		//initialize the array to hold hospitals and counties
 		Client.hospitals = new Hospital[4806];
 		Client.countyList = new ArrayList<ArrayList<String>>(50);
 
-		int count = 0;
+		
 		String line = scanner.nextLine();
 		String[] fields = line.split(REGEX);
 
@@ -28,7 +29,9 @@ public class CSVReader {
 		String currentCounty = "";
 		int stateCount = -1;
 		
+		int count = 0;
 		while (scanner.hasNextLine()) {
+			//save field variables to initalize hospital object
 			int id = Integer.parseInt(fields[0]);
 			String name = fields[1].replaceAll("\"", "");
 			String address = fields[2];
@@ -40,7 +43,7 @@ public class CSVReader {
 			double longitude = Double.parseDouble(fields[15]);
 			
 			
-			
+			//Creates the countyList array using state and county data
 			if(!county.equals(currentCounty)){
 				if(!state.equals(currentState)){
 					stateCount++;
@@ -52,6 +55,7 @@ public class CSVReader {
 				currentCounty = county;
 			}
 
+			//initialize the reviews, if review is not available, make it 0
 			int[] reviews = new int[28];
 			for (int i = 0; i < 28; i++) {
 				if (!fields[11].equals("Not Available")) {
@@ -63,6 +67,7 @@ public class CSVReader {
 					line = scanner.nextLine();
 				fields = line.split(REGEX);
 			}
+			//initialize the hospital
 			Client.hospitals[count] = new Hospital(id, name, address, zip, state, phoneNum, county, latitude, longitude, reviews);
 			count++;
 		}

@@ -11,19 +11,8 @@ public class Client {
 
 	
 	public static void main(String[] args) throws Exception {
-		//DO NOT UNCOMMENT. Only uncomment if latitudes and longitudes need to be updated
-		//GeoCoder.updateLatLong();
-		//GeoCoder.fixLatLong();
 		CSVReader.init();
 		GUI frame = new GUI();
 		frame.setVisible(true);
 	}
-	
-	public static String printHospitals(Hospital[] a) {
-		String output = "";
-	    	for (int i = 0; i < a.length; i++) {
-	    		output += a[i].toString();
-			}
-	    return output;
-	 }
 }

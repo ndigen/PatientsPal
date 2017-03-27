@@ -95,12 +95,18 @@ public class Hospital {
 	public String getPhoneNum() {
 		return phoneNum;
 	}
-	
-	public double getLatitude(){
+
+	/**
+	 * @return the latitude
+	 */
+	public double getLatitude() {
 		return latitude;
 	}
-	
-	public double getLongitude(){
+
+	/**
+	 * @return the longitude
+	 */
+	public double getLongitude() {
 		return longitude;
 	}
 
@@ -110,70 +116,102 @@ public class Hospital {
 	public int[] getRatings() {
 		return ratings;
 	}
-	
+
+	/**
+	 * Uses the Haversine formula to calculate the distance between two
+	 * hospitals
+	 * 
+	 * @param that
+	 *            hospital to find distance to
+	 * @return distance between hospitals
+	 */
 	public double distTo(Hospital that) {
 		int R = 6371;
 		double lat1 = degreesToRadians(this.latitude);
 		double lat2 = degreesToRadians(that.getLatitude());
 		double lon1 = this.longitude;
 		double lon2 = that.getLongitude();
-		
+
 		double dlon = lon2 - lon1;
 		double dlat = lat2 - lat1;
-		
+
 		dlon = degreesToRadians(dlon);
-		
-		double a = Math.pow(Math.sin(dlat/2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon/2), 2);
-		double c = 2 * Math.atan2( Math.sqrt(a), Math.sqrt(1-a) );
+
+		double a = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon / 2), 2);
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		double d = R * c;
-		
+
 		return d;
 	}
-	
-	public double getCleanlinessRating(){
+
+	/**
+	 * @return Cleanliness Rating
+	 */
+	public double getCleanlinessRating() {
 		double ratingTotal = 0 * ratings[2] + 2.5 * ratings[1] + 5 * ratings[0];
 		return ratingTotal / 100;
 	}
-	
-	public double getNurseCommunicationRating(){
+
+	/**
+	 * @return nurse communication rating
+	 */
+	public double getNurseCommunicationRating() {
 		double ratingTotal = 0 * ratings[5] + 2.5 * ratings[4] + 5 * ratings[3];
 		return ratingTotal / 100;
 	}
-	
-	public double getDoctorCommunicationRating(){
+
+	/**
+	 * @return doctor communication rating
+	 */
+	public double getDoctorCommunicationRating() {
 		double ratingTotal = 0 * ratings[8] + 2.5 * ratings[7] + 5 * ratings[6];
 		return ratingTotal / 100;
 	}
-	
-	public double getHelpRating(){
+
+	/**
+	 * @return help rating
+	 */
+	public double getHelpRating() {
 		double ratingTotal = 0 * ratings[11] + 2.5 * ratings[10] + 5 * ratings[9];
 		return ratingTotal / 100;
 	}
-	
-	public double getPainControlRating(){
+
+	/**
+	 * @return pain control rating
+	 */
+	public double getPainControlRating() {
 		double ratingTotal = 0 * ratings[14] + 2.5 * ratings[13] + 5 * ratings[12];
 		return ratingTotal / 100;
 	}
-	
-	public double getQuietnessRating(){
+
+	/**
+	 * @return quietness rating
+	 */
+	public double getQuietnessRating() {
 		double ratingTotal = 0 * ratings[26] + 2.5 * ratings[25] + 5 * ratings[24];
 		return ratingTotal / 100;
 	}
 
+	/**
+	 * @return overall rating
+	 */
 	public double getOverallRating() {
-		double sum = getCleanlinessRating() + getNurseCommunicationRating() + getDoctorCommunicationRating() + getHelpRating() + getPainControlRating() + getQuietnessRating();
-		return sum/6;
+		double sum = getCleanlinessRating() + getNurseCommunicationRating() + getDoctorCommunicationRating()
+				+ getHelpRating() + getPainControlRating() + getQuietnessRating();
+		return sum / 6;
 	}
-	
-	public String getDetails(){
-		return String.format("Name: " + name + "\nLocation: " + address + ", " + county + ", " + state + "\nOverall Rating: %.2f "
-				+ "\n   Cleanliness: %.2f" + "\n   Nurse Communication: %.2f" + "\n   Doctor Communication: %.2f" + "\n   Effective Help: %.2f"
-				+ "\n   Pain Control: %.2f" + "\n   Quietness: %.2f", getOverallRating(), getCleanlinessRating(), getNurseCommunicationRating()
-				, getDoctorCommunicationRating(), getHelpRating(), getPainControlRating(), getQuietnessRating());
-	}
-	
-	private double degreesToRadians(double x) {
-		return x * (Math.PI/180);
+
+	/**
+	 * @return formatting string for details JTextArea
+	 */
+	public String getDetails() {
+		return String.format(
+				"Name: " + name + "\nLocation: " + address + ", " + county + ", " + state + "\nOverall Rating: %.2f "
+						+ "\n   Cleanliness: %.2f" + "\n   Nurse Communication: %.2f"
+						+ "\n   Doctor Communication: %.2f" + "\n   Effective Help: %.2f" + "\n   Pain Control: %.2f"
+						+ "\n   Quietness: %.2f",
+				getOverallRating(), getCleanlinessRating(), getNurseCommunicationRating(),
+				getDoctorCommunicationRating(), getHelpRating(), getPainControlRating(), getQuietnessRating());
 	}
 
 	@Override
@@ -181,6 +219,15 @@ public class Hospital {
 		return String.format("%-70s%-20s%-30s%-50s%.2f\n", name, state, county, address, getOverallRating());
 	}
 
+	/**
+	 * Compares a hospital to another on different criteria
+	 * 
+	 * @param that
+	 *            the hospital to compare to
+	 * @param criteria
+	 *            criteria to compare by
+	 * @return -1 if less, 0 if equal, 1 if more
+	 */
 	public int compareTo(Hospital that, String criteria) {
 		if (criteria.equals("Location")) {
 			if (state.equals(that.getState())) {
@@ -205,6 +252,15 @@ public class Hospital {
 
 		return 0;
 	}
-	
-	
+
+	/**
+	 * converts degrees to radians
+	 * 
+	 * @param x
+	 *            number to be converted
+	 * @return radian value
+	 */
+	private double degreesToRadians(double x) {
+		return x * (Math.PI / 180);
+	}
 }

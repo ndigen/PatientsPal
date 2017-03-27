@@ -31,7 +31,7 @@ public class GUI extends JFrame {
 	ArrayList<Hospital> matches;
 
 	/**
-	 * Create the frame.
+	 * Creates the GUI elements and displays them to screen
 	 */
 	public GUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,6 +90,10 @@ public class GUI extends JFrame {
 	}
 
 	public class stateComboBoxListener implements ActionListener {
+		/**
+		 * called when the state combo box is changed. Updates the county combo box values to correspond to
+		 * the state
+		 */
 		public void actionPerformed(ActionEvent e) {
 
 			if (statesComboBox.getSelectedItem().toString().equals("ALL")) {
@@ -120,6 +124,10 @@ public class GUI extends JFrame {
 	}
 
 	public class sortBtnListener implements ActionListener {
+		/**
+		 * called when the sort button is pressed, hospitals that match the criteria and display
+		 * them to the results JList
+		 */
 		public void actionPerformed(ActionEvent e) {
 			Quicksort.sort(Client.hospitals, sortByComboBox.getSelectedItem().toString());
 
@@ -156,6 +164,10 @@ public class GUI extends JFrame {
 	}
 
 	public class resultsListListener extends MouseAdapter {
+		/**
+		 * called when a hospital is clicked in the results JList. Updates the details text area
+		 * with further details about the hospital
+		 */
 		public void mouseClicked(MouseEvent event) {
 			details.setText(matches.get(resultsList.getSelectedIndex()).getDetails());
 		}

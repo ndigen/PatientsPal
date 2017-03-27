@@ -6,6 +6,9 @@ import com.google.maps.errors.*;
 import com.google.maps.model.*;
 import com.google.maps.internal.*;
 
+//used to get latitudes and latitudes and update the dataset
+//Dont use this stuff. may just delete this since dataset is updated
+
 public class GeoCoder {
 
 	private static final String REGEX = "(,(?=\\S)|:)";
