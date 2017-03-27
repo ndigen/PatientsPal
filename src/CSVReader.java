@@ -17,7 +17,7 @@ public class CSVReader {
 		Scanner scanner = new Scanner(new File("data//Patient_survey__HCAHPS__-_Hospital.csv"));
 		scanner.nextLine();
 
-		Client.hospitals = new Hospital[4807];
+		Client.hospitals = new Hospital[4806];
 		Client.countyList = new ArrayList<ArrayList<String>>(50);
 
 		int count = 0;
@@ -29,7 +29,6 @@ public class CSVReader {
 		int stateCount = -1;
 		
 		while (scanner.hasNextLine()) {
-
 			int id = Integer.parseInt(fields[0]);
 			String name = fields[1].replaceAll("\"", "");
 			String address = fields[2];
@@ -37,6 +36,10 @@ public class CSVReader {
 			String state = fields[4];
 			String phoneNum = fields[7];
 			String county = fields[6];
+			double latitude = Double.parseDouble(fields[14]);
+			double longitude = Double.parseDouble(fields[15]);
+			
+			
 			
 			if(!county.equals(currentCounty)){
 				if(!state.equals(currentState)){
@@ -49,8 +52,8 @@ public class CSVReader {
 				currentCounty = county;
 			}
 
-			int[] reviews = new int[29];
-			for (int i = 0; i < 29; i++) {
+			int[] reviews = new int[28];
+			for (int i = 0; i < 28; i++) {
 				if (!fields[11].equals("Not Available")) {
 					reviews[i] = Integer.parseInt(fields[11]);
 				} else
@@ -60,7 +63,7 @@ public class CSVReader {
 					line = scanner.nextLine();
 				fields = line.split(REGEX);
 			}
-			Client.hospitals[count] = new Hospital(id, name, address, zip, state, phoneNum, county, reviews);
+			Client.hospitals[count] = new Hospital(id, name, address, zip, state, phoneNum, county, latitude, longitude, reviews);
 			count++;
 		}
 		scanner.close();

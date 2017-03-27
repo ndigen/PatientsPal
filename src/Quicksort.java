@@ -134,7 +134,7 @@ public class Quicksort {
 
     public static void shuffle(Hospital[] a) {
     	for (int i = 0; i < a.length; i++) {
-			exch(a, i, rand.nextInt(4807));
+			exch(a, i, rand.nextInt(4806));
 		}
     }
     

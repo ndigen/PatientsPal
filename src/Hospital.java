@@ -9,6 +9,8 @@ public class Hospital {
 	private String state;
 	private String county;
 	private String phoneNum;
+	private double latitude;
+	private double longitude;
 	private int[] ratings;
 
 	/**
@@ -32,7 +34,7 @@ public class Hospital {
 	 *            array of all the rating statistics
 	 */
 	public Hospital(int id, String name, String address, String zip, String state, String phoneNum, String county,
-			int[] ratings) {
+			double latitude, double longitude, int[] ratings) {
 		this.id = id;
 		this.name = name;
 		this.address = address;
@@ -40,6 +42,8 @@ public class Hospital {
 		this.state = state;
 		this.phoneNum = phoneNum;
 		this.county = county;
+		this.latitude = latitude;
+		this.longitude = longitude;
 		this.ratings = ratings;
 	}
 
@@ -91,12 +95,39 @@ public class Hospital {
 	public String getPhoneNum() {
 		return phoneNum;
 	}
+	
+	public double getLatitude(){
+		return latitude;
+	}
+	
+	public double getLongitude(){
+		return longitude;
+	}
 
 	/**
 	 * @return the ratings
 	 */
 	public int[] getRatings() {
 		return ratings;
+	}
+	
+	public double distTo(Hospital that) {
+		int R = 6371;
+		double lat1 = degreesToRadians(this.latitude);
+		double lat2 = degreesToRadians(that.getLatitude());
+		double lon1 = this.longitude;
+		double lon2 = that.getLongitude();
+		
+		double dlon = lon2 - lon1;
+		double dlat = lat2 - lat1;
+		
+		dlon = degreesToRadians(dlon);
+		
+		double a = Math.pow(Math.sin(dlat/2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon/2), 2);
+		double c = 2 * Math.atan2( Math.sqrt(a), Math.sqrt(1-a) );
+		double d = R * c;
+		
+		return d;
 	}
 	
 	public double getCleanlinessRating(){
@@ -137,9 +168,12 @@ public class Hospital {
 	public String getDetails(){
 		return String.format("Name: " + name + "\nLocation: " + address + ", " + county + ", " + state + "\nOverall Rating: %.2f "
 				+ "\n   Cleanliness: %.2f" + "\n   Nurse Communication: %.2f" + "\n   Doctor Communication: %.2f" + "\n   Effective Help: %.2f"
-				+ "\n   Pain Control: %.2f" + "\n   Quietness: %.2f", getOverallRating() < 0 ? "NA" : getOverallRating(), getCleanlinessRating() < 0 ? "NA" : getCleanlinessRating()
-				, getNurseCommunicationRating() < 0 ? "NA" : getNurseCommunicationRating() , getDoctorCommunicationRating() < 0 ? "NA" : getDoctorCommunicationRating(), getHelpRating()
-				, getPainControlRating() < 0 ? "NA" : getPainControlRating(), getQuietnessRating() < 0 ? "NA" : getQuietnessRating());
+				+ "\n   Pain Control: %.2f" + "\n   Quietness: %.2f", getOverallRating(), getCleanlinessRating(), getNurseCommunicationRating()
+				, getDoctorCommunicationRating(), getHelpRating(), getPainControlRating(), getQuietnessRating());
+	}
+	
+	private double degreesToRadians(double x) {
+		return x * (Math.PI/180);
 	}
 
 	@Override
@@ -171,4 +205,6 @@ public class Hospital {
 
 		return 0;
 	}
+	
+	
 }
