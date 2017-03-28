@@ -148,48 +148,48 @@ public class Hospital {
 	 * @return Cleanliness Rating
 	 */
 	public double getCleanlinessRating() {
-		double ratingTotal = 0 * ratings[2] + 2.5 * ratings[1] + 5 * ratings[0];
-		return ratingTotal / 100;
+		double ratingTotal = 0 * ratings[2] + 0.5 * ratings[1] + 1 * ratings[0];
+		return (ratingTotal / (ratings[2] + rating[1] + ratings[0])) * 100;
 	}
 
 	/**
 	 * @return nurse communication rating
 	 */
 	public double getNurseCommunicationRating() {
-		double ratingTotal = 0 * ratings[5] + 2.5 * ratings[4] + 5 * ratings[3];
-		return ratingTotal / 100;
+		double ratingTotal = 0 * ratings[5] + 0.5 * ratings[4] + 1 * ratings[3];
+		return (ratingTotal / (ratings[5] + rating[4] + ratings[3])) * 100;
 	}
 
 	/**
 	 * @return doctor communication rating
 	 */
 	public double getDoctorCommunicationRating() {
-		double ratingTotal = 0 * ratings[8] + 2.5 * ratings[7] + 5 * ratings[6];
-		return ratingTotal / 100;
+		double ratingTotal = 0 * ratings[8] + 0.5 * ratings[7] + 1 * ratings[6];
+		return (ratingTotal / (ratings[8] + rating[7] + ratings[6])) * 100;
 	}
 
 	/**
 	 * @return help rating
 	 */
 	public double getHelpRating() {
-		double ratingTotal = 0 * ratings[11] + 2.5 * ratings[10] + 5 * ratings[9];
-		return ratingTotal / 100;
+		double ratingTotal = 0 * ratings[11] + 0.5 * ratings[10] + 1 * ratings[9];
+		return (ratingTotal / (ratings[11] + rating[10] + ratings[9])) * 100;
 	}
 
 	/**
 	 * @return pain control rating
 	 */
 	public double getPainControlRating() {
-		double ratingTotal = 0 * ratings[14] + 2.5 * ratings[13] + 5 * ratings[12];
-		return ratingTotal / 100;
+		double ratingTotal = 0 * ratings[14] + 0.5 * ratings[13] + 1 * ratings[12];
+		return (ratingTotal / (ratings[14] + rating[13] + ratings[12])) * 100;
 	}
 
 	/**
 	 * @return quietness rating
 	 */
 	public double getQuietnessRating() {
-		double ratingTotal = 0 * ratings[26] + 2.5 * ratings[25] + 5 * ratings[24];
-		return ratingTotal / 100;
+		double ratingTotal = 0 * ratings[26] + 0.5 * ratings[25] + 1 * ratings[24];
+		return (ratingTotal / (ratings[26] + rating[25] + ratings[24])) * 100;
 	}
 
 	/**
