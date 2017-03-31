@@ -18,7 +18,7 @@ public class CSVReader {
 		scanner.nextLine();
 
 		//initialize the array to hold hospitals and counties
-		Client.hospitals = new Hospital[4806];
+		Client.hospitals = new Hospital[4807];
 		Client.countyList = new ArrayList<ArrayList<String>>(50);
 
 		
@@ -56,8 +56,8 @@ public class CSVReader {
 			}
 
 			//initialize the reviews, if review is not available, make it 0
-			int[] reviews = new int[28];
-			for (int i = 0; i < 28; i++) {
+			int[] reviews = new int[27];
+			for (int i = 0; i < 27; i++) {
 				if (!fields[11].equals("Not Available")) {
 					reviews[i] = Integer.parseInt(fields[11]);
 				} else
@@ -66,7 +66,16 @@ public class CSVReader {
 				if (scanner.hasNextLine())
 					line = scanner.nextLine();
 				fields = line.split(REGEX);
+				
 			}
+			
+			//Making sure that we have moved on to the next hospital
+			while(fields[2].equals(address) && scanner.hasNextLine()){
+				
+				line = scanner.nextLine();
+				fields = line.split(REGEX);
+			}
+			
 			//initialize the hospital
 			Client.hospitals[count] = new Hospital(id, name, address, zip, state, phoneNum, county, latitude, longitude, reviews);
 			count++;
