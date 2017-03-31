@@ -144,7 +144,7 @@ public class Hospital {
 		return d;
 	}
 
-	//**
+	/**
 	 * @return Cleanliness Rating
 	 */
 	public double getCleanlinessRating() {
