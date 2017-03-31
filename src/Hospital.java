@@ -199,6 +199,12 @@ public class Hospital {
 	 * @return formatting string for details JTextArea
 	 */
 	public String getDetails() {
+		if(getOverallRating() < 0)
+			return String.format(
+					"Name: " + name + "\nLocation: " + address + ", " + county + ", " + state + "\nOverall Rating: NA "
+							+ "\n   Cleanliness: NA" + "\n   Nurse Communication: NA"
+							+ "\n   Doctor Communication: NA" + "\n   Effective Help: NA" + "\n   Pain Control: NA"
+							+ "\n   Quietness: NA");
 		return String.format(
 				"Name: " + name + "\nLocation: " + address + ", " + county + ", " + state + "\nOverall Rating: %.2f "
 						+ "\n   Cleanliness: %.2f" + "\n   Nurse Communication: %.2f"
@@ -210,6 +216,8 @@ public class Hospital {
 
 	@Override
 	public String toString() {
+		if(getOverallRating() < 0)
+			return String.format("%-70s%-20s%-30s%-50sNA\n", name, state, county, address, getOverallRating());
 		return String.format("%-70s%-20s%-30s%-50s%.2f\n", name, state, county, address, getOverallRating());
 	}
 
