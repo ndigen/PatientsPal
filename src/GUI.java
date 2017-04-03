@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import edu.princeton.cs.algs4.Edge;
+
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JList;
@@ -21,14 +24,16 @@ import java.awt.event.MouseEvent;
 public class GUI extends JFrame {
 	private JPanel contentPane;
 	JScrollPane scrollPane;
-	JList resultsList;
+	JList resultsList, nearestList;
 	JComboBox<String> countyComboBox, statesComboBox, sortByComboBox;
 	JLabel lblCounty, lblState, lblSortBy;
 	JButton btnSort;
 	JTextArea details;
 
-	DefaultListModel<String> listModel;
+	DefaultListModel<String> resultsListModel;
+	DefaultListModel<String> nearestListModel;
 	ArrayList<Hospital> matches;
+	ArrayList<Hospital> nearest;
 
 	/**
 	 * Creates the GUI elements and displays them to screen
@@ -44,8 +49,8 @@ public class GUI extends JFrame {
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 70, 750, 450);
 
-		listModel = new DefaultListModel<String>();
-		resultsList = new JList<String>(listModel);
+		resultsListModel = new DefaultListModel<String>();
+		resultsList = new JList<String>(resultsListModel);
 		resultsList.setFont(new Font("monospaced", Font.PLAIN, 12));
 		resultsList.addMouseListener(new resultsListListener());
 		scrollPane.setViewportView(resultsList);
@@ -77,7 +82,13 @@ public class GUI extends JFrame {
 		btnSort.setBounds(600, 37, 97, 25);
 
 		details = new JTextArea();
-		details.setBounds(10, 530, 750, 260);
+		details.setBounds(10, 530, 375, 260);
+		
+		nearestListModel = new DefaultListModel<String>();
+		nearestList = new JList<String>(nearestListModel);
+		nearestList.setFont(new Font("monospaced", Font.PLAIN, 12));
+		nearestList.setBounds(395, 530, 365, 260);
+		nearestList.addMouseListener(new nearestListListener());
 
 		contentPane.add(sortByComboBox);
 		contentPane.add(lblState);
@@ -87,6 +98,7 @@ public class GUI extends JFrame {
 		contentPane.add(scrollPane);
 		contentPane.add(btnSort);
 		contentPane.add(details);
+		contentPane.add(nearestList);
 	}
 
 	public class stateComboBoxListener implements ActionListener {
@@ -129,7 +141,7 @@ public class GUI extends JFrame {
 		 * them to the results JList
 		 */
 		public void actionPerformed(ActionEvent e) {
-			Quicksort.sort(Client.hospitals, sortByComboBox.getSelectedItem().toString());
+			Quicksort.sort(Client.sortedHospitals, sortByComboBox.getSelectedItem().toString());
 
 			String state = statesComboBox.getSelectedItem().toString();
 			String county = countyComboBox.getSelectedItem().toString();
@@ -137,28 +149,28 @@ public class GUI extends JFrame {
 			matches = new ArrayList<Hospital>();
 
 			if (county.equals("ALL")) {
-				for (int i = 0; i < Client.hospitals.length; i++) {
-					if (Client.hospitals[i].getState().equals(state)) {
-						matches.add(Client.hospitals[i]);
+				for (int i = 0; i < Client.sortedHospitals.length; i++) {
+					if (Client.sortedHospitals[i].getState().equals(state)) {
+						matches.add(Client.sortedHospitals[i]);
 					}
 				}
 			} else if (state.equals("ALL")) {
-				for (int i = 0; i < Client.hospitals.length; i++) {
-					matches.add(Client.hospitals[i]);
+				for (int i = 0; i < Client.sortedHospitals.length; i++) {
+					matches.add(Client.sortedHospitals[i]);
 				}
 			} else {
-				for (int i = 0; i < Client.hospitals.length; i++) {
-					if (Client.hospitals[i].getState().equals(state)
-							&& Client.hospitals[i].getCounty().equals(county)) {
-						matches.add(Client.hospitals[i]);
+				for (int i = 0; i < Client.sortedHospitals.length; i++) {
+					if (Client.sortedHospitals[i].getState().equals(state)
+							&& Client.sortedHospitals[i].getCounty().equals(county)) {
+						matches.add(Client.sortedHospitals[i]);
 					}
 				}
 			}
 
-			listModel.clear();
+			resultsListModel.clear();
 
 			for (int i = 0; i < matches.size(); i++) {
-				listModel.addElement(matches.get(i).toString());
+				resultsListModel.addElement(matches.get(i).toString());
 			}
 		}
 	}
@@ -169,8 +181,37 @@ public class GUI extends JFrame {
 		 * with further details about the hospital
 		 */
 		public void mouseClicked(MouseEvent event) {
-			details.setText(matches.get(resultsList.getSelectedIndex()).getDetails());
+			
+			nearest = new ArrayList<Hospital>();
+			
+			Hospital selectedHospital = matches.get(resultsList.getSelectedIndex());
+			for (int i = 0; i < Client.hospitals.length; i++) {
+				if(selectedHospital.equals(Client.hospitals[i])) {
+					for(Edge e: Client.graph.adj(i)) {
+						nearest.add((Client.hospitals[e.other(i)]));
+					}
+				}
+			}
+			
+			nearestListModel.clear();
+			
+			for (int i = 0; i < nearest.size(); i++) {
+				nearestListModel.addElement(nearest.get(i).toString());
+			}
+			details.setText(selectedHospital.getDetails());
 		}
 	}
 
+	
+	public class nearestListListener extends MouseAdapter {
+		/**
+		 * called when a hospital is clicked in the results JList. Updates the details text area
+		 * with further details about the hospital
+		 */
+		public void mouseClicked(MouseEvent event) {
+			
+			Hospital selectedHospital = nearest.get(nearestList.getSelectedIndex());
+			details.setText(selectedHospital.getDetails());
+		}
+	}
 }

@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="lib/joda-time-2.9.9.jar"/>
 	<classpathentry kind="lib" path="lib/okhttp-2.7.5.jar"/>
 	<classpathentry kind="lib" path="lib/okio-1.11.0.jar"/>
+	<classpathentry kind="lib" path="lib/algs4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,6 +1,10 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+import edu.princeton.cs.algs4.Edge;
+import edu.princeton.cs.algs4.EdgeWeightedGraph;
+
 import java.util.ArrayList;
 
 public class CSVReader {
@@ -12,7 +16,7 @@ public class CSVReader {
 	 * 
 	 * @throws FileNotFoundException
 	 */
-	public static void init() throws FileNotFoundException {
+	public static void initData() throws FileNotFoundException {
 		//open file for reading
 		Scanner scanner = new Scanner(new File("data//Patient_survey__HCAHPS__-_Hospital.csv"));
 		scanner.nextLine();
@@ -81,7 +85,20 @@ public class CSVReader {
 			count++;
 		}
 		scanner.close();
+		Client.sortedHospitals = Client.hospitals.clone();
+	}
+	
+	public static void initGraph() {
+		Client.graph = new EdgeWeightedGraph(Client.hospitals.length);
 		
+		for(int i = 0; i < Client.hospitals.length; i++) {
+			for(int j = 0; j < Client.hospitals.length; j++) {
+				if(j == i) continue;
+				if(Client.hospitals[i].distTo(Client.hospitals[j]) <= 50) {
+					Client.graph.addEdge(new Edge(i, j, Client.hospitals[i].distTo(Client.hospitals[j])));
+				}
+			}
+		}
 	}
 
 }
