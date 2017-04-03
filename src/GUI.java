@@ -23,10 +23,10 @@ import java.awt.event.MouseEvent;
 
 public class GUI extends JFrame {
 	private JPanel contentPane;
-	JScrollPane scrollPane;
+	JScrollPane resultsScrollPane, nearestScrollPane;
 	JList resultsList, nearestList;
 	JComboBox<String> countyComboBox, statesComboBox, sortByComboBox;
-	JLabel lblCounty, lblState, lblSortBy;
+	JLabel lblCounty, lblState, lblSortBy, lblNearest;
 	JButton btnSort;
 	JTextArea details;
 
@@ -46,14 +46,14 @@ public class GUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 70, 750, 450);
+		resultsScrollPane = new JScrollPane();
+		resultsScrollPane.setBounds(10, 70, 750, 450);
 
 		resultsListModel = new DefaultListModel<String>();
 		resultsList = new JList<String>(resultsListModel);
 		resultsList.setFont(new Font("monospaced", Font.PLAIN, 12));
 		resultsList.addMouseListener(new resultsListListener());
-		scrollPane.setViewportView(resultsList);
+		resultsScrollPane.setViewportView(resultsList);
 
 		String[] empty = { " " };
 		countyComboBox = new JComboBox<String>(empty);
@@ -87,18 +87,24 @@ public class GUI extends JFrame {
 		nearestListModel = new DefaultListModel<String>();
 		nearestList = new JList<String>(nearestListModel);
 		nearestList.setFont(new Font("monospaced", Font.PLAIN, 12));
-		nearestList.setBounds(395, 530, 365, 260);
 		nearestList.addMouseListener(new nearestListListener());
+		nearestScrollPane = new JScrollPane();
+		nearestScrollPane.setBounds(395, 550, 365, 240);
+		nearestScrollPane.setViewportView(nearestList);
+		
+		lblNearest = new JLabel("Hospitals within 20km");
+		lblNearest.setBounds(395, 530, 300, 16);
 
 		contentPane.add(sortByComboBox);
 		contentPane.add(lblState);
 		contentPane.add(statesComboBox);
 		contentPane.add(lblCounty);
 		contentPane.add(countyComboBox);
-		contentPane.add(scrollPane);
+		contentPane.add(resultsScrollPane);
 		contentPane.add(btnSort);
 		contentPane.add(details);
-		contentPane.add(nearestList);
+		contentPane.add(nearestScrollPane);
+		contentPane.add(lblNearest);
 	}
 
 	public class stateComboBoxListener implements ActionListener {
