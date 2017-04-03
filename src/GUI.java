@@ -92,7 +92,7 @@ public class GUI extends JFrame {
 		nearestScrollPane.setBounds(395, 550, 365, 240);
 		nearestScrollPane.setViewportView(nearestList);
 		
-		lblNearest = new JLabel("Hospitals within 20km");
+		lblNearest = new JLabel("Hospitals within 50km");
 		lblNearest.setBounds(395, 530, 300, 16);
 
 		contentPane.add(sortByComboBox);
