@@ -89,7 +89,7 @@ public class GUI extends JFrame {
 		nearestList.setFont(new Font("monospaced", Font.PLAIN, 12));
 		nearestList.addMouseListener(new nearestListListener());
 		nearestScrollPane = new JScrollPane();
-		nearestScrollPane.setBounds(395, 550, 365, 240);
+		nearestScrollPane.setBounds(395, 550, 365, 230);
 		nearestScrollPane.setViewportView(nearestList);
 		
 		lblNearest = new JLabel("Hospitals within 50km");
